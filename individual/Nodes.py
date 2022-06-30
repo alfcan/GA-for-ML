@@ -1,18 +1,18 @@
-from abc import ABC, abstractmethod
+class Node:
+    def __init__(self, t):
+        self.t = t
 
-class NodeInterface(ABC):
-    @abstractmethod
+    def set_type(self, t):
+        self.t = t
+
     def get_type(self):
-        pass
+        return self.t
 
 
-class Leaf(NodeInterface):
+class Leaf(Node):
     def __init__(self, label):
-        self.type = 1
+        super().__init__(1)
         self.label = label
-
-    def get_type(self):
-        return self.type
 
     def set_label(self, label):
         self.label = label
@@ -21,25 +21,24 @@ class Leaf(NodeInterface):
         return self.label
 
 
-class InnerNode(NodeInterface):
-    def __init__(self, child_left, child_right, feature, condition, value, range):
-        self.type = 0
-        self.childs = [child_left, child_right]
-        self.feature = feature
-        self.condition = condition      # contidion=0 : < --- condition=1 : >=
-        self.value = value
-        self.range = range              # range= "min_value-max_value"
+class InnerNode(Node):
 
-    def get_type(self):
-        return self.type
+    def __init__(self, feature, condition, value, value_range):
+        super().__init__(0)
+        self.childs = [None, None]
+        self.feature = feature
+        self.condition = condition  # contidion=0 : < --- condition=1 : >=
+        self.value = value
+        self.range = value_range  # range= "min_value-max_value"
 
     '''
         Add two childs: child_left is left child (childs[0]) and child_right is right child (childs[1])
         If the condition is verify go to childs[0] else go to childs[1]
     '''
+
     def add_childs(self, child_left, child_right):
         self.childs[0] = child_left
-        self.chilsd[1] = child_right
+        self.childs[1] = child_right
 
     def set_child_left(self, child):
         self.childs[0] = child
@@ -49,7 +48,7 @@ class InnerNode(NodeInterface):
 
     def delete_childs(self):
         self.childs[0] = None
-        self.chilsd[1] = None
+        self.childs[1] = None
 
     def get_child_left(self):
         return self.childs[0]
@@ -75,8 +74,8 @@ class InnerNode(NodeInterface):
     def get_value(self):
         return self.value
 
-    def set_range(self, range):
-        self.range = range
+    def set_range(self, value_range):
+        self.range = value_range
 
     def get_range(self):
         return self.range
