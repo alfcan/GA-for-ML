@@ -1,12 +1,19 @@
 class Node:
     def __init__(self, t):
         self.t = t
+        self.parent = None
 
     def set_type(self, t):
         self.t = t
 
     def get_type(self):
         return self.t
+
+    def get_parent(self):
+        return self.parent
+
+    def set_parent(self, parent):
+        self.parent = parent
 
 
 class Leaf(Node):
@@ -20,6 +27,11 @@ class Leaf(Node):
     def get_label(self):
         return self.label
 
+    def __eq__(self, other):
+        if isinstance(other, Leaf):
+            return self.label == other.label and self.parent == other.parent
+        return False
+
 
 class InnerNode(Node):
 
@@ -29,13 +41,12 @@ class InnerNode(Node):
         self.feature = feature
         self.condition = condition  # contidion=0 : < --- condition=1 : >=
         self.value = value
-        self.range = value_range  # range= "min_value-max_value"
+        self.value_range = value_range  # range= "min_value-max_value"
 
     '''
         Add two childs: child_left is left child (childs[0]) and child_right is right child (childs[1])
         If the condition is verify go to childs[0] else go to childs[1]
     '''
-
     def add_childs(self, child_left, child_right):
         self.childs[0] = child_left
         self.childs[1] = child_right
@@ -75,7 +86,14 @@ class InnerNode(Node):
         return self.value
 
     def set_range(self, value_range):
-        self.range = value_range
+        self.value_range = value_range
 
     def get_range(self):
-        return self.range
+        return self.value_range
+
+    def __eq__(self, other):
+        if isinstance(other, InnerNode):
+            return self.childs == other.childs and self.feature == other.feature and self.condition == other.condition \
+                   and self.value == other.value and self.value_range == other.value_range
+        return False
+
