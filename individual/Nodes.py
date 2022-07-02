@@ -1,31 +1,13 @@
 class Node:
-    def __init__(self, t):
-        self.t = t
+    def __init__(self, type):
+        self.type = type
         self.parent = None
-
-    def set_type(self, t):
-        self.t = t
-
-    def get_type(self):
-        return self.t
-
-    def get_parent(self):
-        return self.parent
-
-    def set_parent(self, parent):
-        self.parent = parent
 
 
 class Leaf(Node):
     def __init__(self, label):
         super().__init__(1)
         self.label = label
-
-    def set_label(self, label):
-        self.label = label
-
-    def get_label(self):
-        return self.label
 
     def __eq__(self, other):
         if isinstance(other, Leaf):
@@ -66,30 +48,6 @@ class InnerNode(Node):
 
     def get_child_right(self):
         return self.childs[1]
-
-    def set_feature(self, feature):
-        self.feature = feature
-
-    def get_feature(self):
-        return self.feature
-
-    def set_condition(self, condition):
-        self.condition = condition
-
-    def get_condition(self):
-        return self.condition
-
-    def set_value(self, value):
-        self.value = value
-
-    def get_value(self):
-        return self.value
-
-    def set_range(self, value_range):
-        self.value_range = value_range
-
-    def get_range(self):
-        return self.value_range
 
     def __eq__(self, other):
         if isinstance(other, InnerNode):

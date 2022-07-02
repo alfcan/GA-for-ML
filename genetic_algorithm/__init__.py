@@ -1,10 +1,19 @@
 from random import random, randrange, uniform
 
-from genetic_algorithm.utility import get_tree_representation, read_file, get_tree_height
+from genetic_algorithm.utility import get_tree_representation, read_file, get_tree_height, \
+    generate_nodes, build_tree
 
 
 def initialize_population(filename):
-    return read_file(filename)
+    features = []
+    labels = []
+    generate_nodes(features, labels, filename)
+
+    tree = features[randrange(len(features))]
+    features.remove(tree)
+    build_tree(tree, features, labels, labels)
+
+    return tree
 
 
 def fitness_func(solution, solution_idx):
@@ -14,7 +23,7 @@ def fitness_func(solution, solution_idx):
 def tree_crossover(node1, node2):
     iterations = randrange(get_tree_height(node1) + 1)
     for i in range(0, iterations):
-        if node1.get_type() == 0:
+        if node1.type == 0:
             if random() > 0.4:
                 node1 = node1.get_child_left()
             else:
@@ -22,37 +31,37 @@ def tree_crossover(node1, node2):
 
     iterations = randrange(get_tree_height(node2) + 1)
     for i in range(0, iterations):
-        if node2.get_type() == 0:
+        if node2.type == 0:
             if random() <= 0.6:
                 node2 = node2.get_child_left()
             else:
                 node2 = node2.get_child_right()
 
-    parent1 = node1.get_parent()
-    parent2 = node2.get_parent()
+    parent1 = node1.parent
+    parent2 = node2.parent
 
     '''
-    if node1.get_type() == 0:
-        print(f'NODE 1 Inner -> {node1.get_feature()}')
+    if node1.type == 0:
+        print(f'NODE 1 Inner -> {node1.feature}')
     else:
-        print(f'NODE 1 -> {node1.get_label()}')
-    if node2.get_type() == 0:
-        print(f'NODE 2 Inner -> {node2.get_feature()}')
+        print(f'NODE 1 -> {node1.label}')
+    if node2.type == 0:
+        print(f'NODE 2 Inner -> {node2.feature}')
     else:
-        print(f'NODE 2 -> {node2.get_label()}')
+        print(f'NODE 2 -> {node2.label}')
 
-    print(f'Parent NODE 1 -> {parent1.get_feature()}')
-    print(f'Parent NODE 2 -> {parent2.get_feature()}')
+    print(f'Parent NODE 1 -> {parent1.feature}')
+    print(f'Parent NODE 2 -> {parent2.feature}')
     '''
 
-    if parent1 is None:         # parent1 == None if node is root
+    if parent1 is None:         # parent1 is None if node is root
         parent1 = node2
     elif parent1.get_child_left() == node1:
         parent1.set_child_left(node2)
     else:
         parent1.set_child_right(node2)
 
-    if parent2 is None:         # parent2 == None if node is root
+    if parent2 is None:         # parent2 is None if node is root
         parent2 = node1
     elif parent2.get_child_left() == node2:
         parent2.set_child_left(node1)
@@ -64,29 +73,27 @@ def tree_mutation(tree):
     iterations = randrange(get_tree_height(tree) + 1)
 
     for i in range(0, iterations):
-        if tree.get_type() == 0:
+        if tree.type == 0:
             if random() >= 0.5:
                 tree = tree.get_child_left()
             else:
                 tree = tree.get_child_right()
 
-    if tree.get_type() == 0:
+    if tree.type == 0:
         if random() >= 0.5:     # change value
-            value_range = [int(value) for value in tree.get_range().split('-')]
+            value_range = [int(value) for value in tree.value_range.split('-')]
             tree.set_value(uniform(value_range[0], value_range[1]))
             print(f'Change value: {tree.get_value()}')
         else:                   # change condition '<' <-> '>='
-            if tree.get_condition() == 0:
-                tree.set_condition(1)
+            if tree.condition == 0:
+                tree.condition = 1
             else:
-                tree.set_condition(0)
-            print(f'Change condition: {tree.get_condition()}')
+                tree.condition = 0
+            print(f'Change condition: {tree.condition}')
     else:
-        print('It is a label ... FUCK I DO?')
+        print('It is a label ...')
 
 
 if __name__ == '__main__':
-    tree1 = initialize_population('tree.txt')
-    tree2 = initialize_population('tree2.txt')
-
-    tree_mutation(tree1)
+    tree = initialize_population('nodes.txt')
+    get_tree_representation(tree)
