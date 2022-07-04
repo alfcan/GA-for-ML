@@ -3,17 +3,27 @@ from random import random, randrange, uniform
 from genetic_algorithm.utility import get_tree_representation, read_file, get_tree_height, \
     generate_nodes, build_tree
 
+SIZE_POPULATION = 10
+FILE_NODES = 'nodes.txt'
 
-def initialize_population(filename):
+
+def initialize_population():
     features = []
     labels = []
-    generate_nodes(features, labels, filename)
 
-    tree = features[randrange(len(features))]
-    features.remove(tree)
-    build_tree(tree, features, labels, labels)
+    generate_nodes(features, labels, FILE_NODES)
 
-    return tree
+    trees = []
+    for i in range(SIZE_POPULATION):
+        inner_nodes = features.copy()
+        leafs = labels.copy()
+
+        root = inner_nodes[randrange(len(inner_nodes))]
+        inner_nodes.remove(root)
+        build_tree(root, inner_nodes, leafs, leafs)
+        trees.append(root)
+
+    return trees
 
 
 def fitness_func(solution, solution_idx):
@@ -54,14 +64,14 @@ def tree_crossover(node1, node2):
     print(f'Parent NODE 2 -> {parent2.feature}')
     '''
 
-    if parent1 is None:         # parent1 is None if node is root
+    if parent1 is None:         # if parent1 is None then node is root
         parent1 = node2
     elif parent1.get_child_left() == node1:
         parent1.set_child_left(node2)
     else:
         parent1.set_child_right(node2)
 
-    if parent2 is None:         # parent2 is None if node is root
+    if parent2 is None:         # if parent2 is None then node is root
         parent2 = node1
     elif parent2.get_child_left() == node2:
         parent2.set_child_left(node1)
@@ -69,31 +79,34 @@ def tree_crossover(node1, node2):
         parent2.set_child_right(node1)
 
 
-def tree_mutation(tree):
-    iterations = randrange(get_tree_height(tree) + 1)
+def tree_mutation(root):
+    iterations = randrange(get_tree_height(root) + 1)
 
     for i in range(0, iterations):
-        if tree.type == 0:
+        if root.type == 0:
             if random() >= 0.5:
-                tree = tree.get_child_left()
+                root = root.get_child_left()
             else:
-                tree = tree.get_child_right()
+                root = root.get_child_right()
 
-    if tree.type == 0:
+    if root.type == 0:
         if random() >= 0.5:     # change value
-            value_range = [int(value) for value in tree.value_range.split('-')]
-            tree.set_value(uniform(value_range[0], value_range[1]))
-            print(f'Change value: {tree.get_value()}')
+            value_range = [int(value) for value in root.value_range.split('-')]
+            root.set_value(uniform(value_range[0], value_range[1]))
+            print(f'Change value: {root.get_value()}')
         else:                   # change condition '<' <-> '>='
-            if tree.condition == 0:
-                tree.condition = 1
+            if root.condition == 0:
+                root.condition = 1
             else:
-                tree.condition = 0
-            print(f'Change condition: {tree.condition}')
+                root.condition = 0
+            print(f'Change condition: {root.condition}')
     else:
         print('It is a label ...')
+        # TODO
 
 
 if __name__ == '__main__':
-    tree = initialize_population('nodes.txt')
-    get_tree_representation(tree)
+    population = initialize_population()
+    for tree in population:
+        print('\n\n\nTREE')
+        get_tree_representation(tree)

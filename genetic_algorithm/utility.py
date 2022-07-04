@@ -23,25 +23,29 @@ def build_tree(node, inner_nodes, leafs, leafs_copy):
 
     # only one inner node -> the childs of parent node can be: 2 label nodes or 1 inner node and 1 label node
     if len(inner_nodes) == 1:
-        if rand < 0.33:
-            rand = rand + 0.33
+        if rand < 0.5:
+            rand = rand + 0.5
+
     # zero inner nodes -> the childs of parent node can be: 2 label nodes
     if len(inner_nodes) == 0:
-        if rand < 0.66:
-            rand = rand + 0.66
-    # if there are less than 2 leaf nodes then we add a "copy" lead node
-    if len(leafs) == 1:
+        if rand < 0.75:
+            rand = rand + 0.75
+
+    # if there are less than 2 leaf nodes then we add a "copy" leaf node
+    if len(leafs) < 2:
         leaf1 = randrange(len(leafs_copy))
-        leafs.add(leafs_copy[leaf1])
-    elif len(leafs) < 1:
+        leafs.append(leafs_copy[leaf1])
+    # if there aren't leafs then we add a two "copy" of leaf node
+    elif len(leafs) == 0:
         leaf1 = randrange(len(leafs_copy))
         leaf2 = randrange(len(leafs_copy))
         if leaf1 == leaf2:
             leaf2 = randrange(len(leafs_copy))
-        leafs.add(leafs_copy[leaf1])
-        leafs.add(leafs_copy[leaf2])
+        leafs.append(leafs_copy[leaf1])
+        leafs.append(leafs_copy[leaf2])
 
-    if rand < 0.33:
+    # rand < 0.5 -> select two inner nodes as childs of node
+    if rand < 0.5:
         feature_l = inner_nodes[randrange(len(inner_nodes))]
         inner_nodes.remove(feature_l)
         feature_r = inner_nodes[randrange(len(inner_nodes))]
@@ -52,7 +56,9 @@ def build_tree(node, inner_nodes, leafs, leafs_copy):
 
         build_tree(feature_l, inner_nodes, leafs, leafs_copy)
         build_tree(feature_r, inner_nodes, leafs, leafs_copy)
-    elif 0.33 <= rand < 0.66:
+
+    # rand < 0.5 -> select an inner node and a leaf as childs of node
+    elif 0.50 <= rand < 0.75:
         feature = inner_nodes[randrange(len(inner_nodes))]
         inner_nodes.remove(feature)
         label = leafs[randrange(len(leafs))]
@@ -66,9 +72,13 @@ def build_tree(node, inner_nodes, leafs, leafs_copy):
             node.set_child_left(feature)
 
         build_tree(feature, inner_nodes, leafs, leafs_copy)
+
+    # rand >= 0.75 -> select two leafs as childs of node
     else:
         label_l = leafs[randrange(len(leafs))]
         label_r = leafs[randrange(len(leafs))]
+        if label_l == label_r:
+            label_r = leafs[randrange(len(leafs))]
 
         node.set_child_left(label_l)
         node.set_child_right(label_r)
@@ -132,6 +142,28 @@ def read_file(filename):
         build_tree_file(nodes, tree)
 
         return tree
+
+
+'''
+FILE EXAMPLE
+root 0 feature1 >= 0.8 0-1
+feature1_l 0 feature2 < 0.2 0-1
+feature1_r 0 feature7 >= 0.7 0-1
+feature2_l 0 feature3 >= 0.3 0-1
+feature2_r 1 2
+feature3_l 0 feature4 >= 0.1 0-1
+feature3_r 0 feature5 < 0.6 0-1
+feature4_l 1 1
+feature4_r 0 feature6 >= 0.8 0-1
+feature5_l 1 3
+feature5_r 1 4
+feature6_l 1 5
+feature6_r 1 6
+feature7_l 0 feature8 >= 0.8 0-1
+feature7_r 1 7
+feature8_l 1 8
+feature8_r 1 9
+'''
 
 
 '''def generate_tree_file(features, labels, filename):
