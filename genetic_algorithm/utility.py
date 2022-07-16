@@ -1,6 +1,6 @@
 from random import randrange, random, uniform
 
-from individual.Nodes import InnerNode, Leaf
+from genetic_algorithm.ga_components.nodes import InnerNode, Leaf
 
 
 def generate_nodes(inner_nodes, leafs, filename):
@@ -96,7 +96,7 @@ def get_value(value_range):
     return uniform(value_range[0], value_range[1])
 
 
-def get_tree_representation(node):      # preorder visit of tree
+def get_tree_representation(node):  # preorder visit of tree
     if node.type == 0:
         print(node.feature)
         print(f'-- child left {node.feature}')
@@ -110,7 +110,14 @@ def get_tree_representation(node):      # preorder visit of tree
 def get_tree_height(node):
     if node.type == 1:
         return 0
-    return max(get_tree_height(node.get_child_left())+1, get_tree_height(node.get_child_right())+1)
+    return max(get_tree_height(node.get_child_left()) + 1, get_tree_height(node.get_child_right()) + 1)
+
+
+def get_root(node):
+    if node.parent is None:
+        return node
+    else:
+        return get_root(node.parent)
 
 
 def build_tree_file(nodes, node):
@@ -164,7 +171,6 @@ feature7_r 1 7
 feature8_l 1 8
 feature8_r 1 9
 '''
-
 
 '''def generate_tree_file(features, labels, filename):
     with open(filename, 'w') as file:

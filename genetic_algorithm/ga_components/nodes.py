@@ -1,6 +1,6 @@
 class Node:
-    def __init__(self, type):
-        self.type = type
+    def __init__(self, t):
+        self.type = t
         self.parent = None
 
 
@@ -30,13 +30,17 @@ class InnerNode(Node):
         If the condition is verify go to childs[0] else go to childs[1]
     '''
     def add_childs(self, child_left, child_right):
+        child_left.parent = self
+        child_right.parent = self
         self.childs[0] = child_left
         self.childs[1] = child_right
 
     def set_child_left(self, child):
+        child.parent = self
         self.childs[0] = child
 
     def set_child_right(self, child):
+        child.parent = self
         self.childs[1] = child
 
     def delete_childs(self):
@@ -51,7 +55,6 @@ class InnerNode(Node):
 
     def __eq__(self, other):
         if isinstance(other, InnerNode):
-            return self.childs == other.childs and self.feature == other.feature and self.condition == other.condition \
+            return self.feature == other.feature and self.condition == other.condition \
                    and self.value == other.value and self.value_range == other.value_range
         return False
-
