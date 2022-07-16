@@ -3,6 +3,7 @@ from random import randrange, random, uniform
 from genetic_algorithm.ga_components.nodes import InnerNode, Leaf
 
 
+# This function read the file and generate list of inner nodes and list of leafs
 def generate_nodes(inner_nodes, leafs, filename):
     inner_nodes.clear()
     leafs.clear()
@@ -18,6 +19,7 @@ def generate_nodes(inner_nodes, leafs, filename):
                 leafs.append(leaf)
 
 
+# This function build a random tree
 def build_tree(node, inner_nodes, leafs, leafs_copy):
     rand = random()
 
@@ -54,8 +56,13 @@ def build_tree(node, inner_nodes, leafs, leafs_copy):
         node.set_child_left(feature_l)
         node.set_child_right(feature_r)
 
-        build_tree(feature_l, inner_nodes, leafs, leafs_copy)
-        build_tree(feature_r, inner_nodes, leafs, leafs_copy)
+        # 50% probability of building first the left or right subtree
+        if randrange(2) == 0:
+            build_tree(feature_l, inner_nodes, leafs, leafs_copy)
+            build_tree(feature_r, inner_nodes, leafs, leafs_copy)
+        else:
+            build_tree(feature_r, inner_nodes, leafs, leafs_copy)
+            build_tree(feature_l, inner_nodes, leafs, leafs_copy)
 
     # rand < 0.5 -> select an inner node and a leaf as childs of node
     elif 0.50 <= rand < 0.75:
@@ -84,6 +91,7 @@ def build_tree(node, inner_nodes, leafs, leafs_copy):
         node.set_child_right(label_r)
 
 
+# This function return a random condition for node
 def get_condition():
     if randrange(2) == 0:
         return '>='

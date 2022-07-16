@@ -2,7 +2,7 @@ import copy
 from random import random, randrange
 
 import numpy as np
-from pymoo.core.problem import Problem, ElementwiseProblem
+from pymoo.core.problem import ElementwiseProblem
 from pymoo.core.sampling import Sampling
 
 from genetic_algorithm.utility import generate_nodes, build_tree

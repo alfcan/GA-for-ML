@@ -6,7 +6,7 @@ from pymoo.core.crossover import Crossover
 from pymoo.core.duplicate import ElementwiseDuplicateElimination
 from pymoo.core.mutation import Mutation
 
-from genetic_algorithm.utility import get_root, get_tree_height
+from genetic_algorithm.utility import get_root, get_tree_height, get_tree_representation
 
 
 class TreeCrossover(Crossover):
