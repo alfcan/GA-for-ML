@@ -2,9 +2,11 @@ import copy
 from random import random, randrange
 
 import numpy as np
+import pandas as pd
 from pymoo.core.problem import ElementwiseProblem
 from pymoo.core.sampling import Sampling
 
+from genetic_algorithm.TreeModel import TreeModel
 from genetic_algorithm.utility import generate_nodes, build_tree
 
 FILE_NODES = 'nodes.txt'
@@ -17,8 +19,25 @@ class ProblemDecisionTree(ElementwiseProblem):
         super().__init__(n_var=1, n_obj=1, n_constr=0)
 
     def _evaluate(self, x, out, *args, **kwargs):
-        # TODO
+        model = TreeModel(x[0])
+
+        model.predict()
+        # confusion_matrix = model.get_confusion_matrix
+
         out['F'] = random()
+
+
+class Initialization(Sampling):
+
+    def _do(self, problem, n_samples, **kwargs):
+        X = np.full((n_samples, 1), None)
+
+        i = 0
+        for tree in initializate_population():
+            X[i, 0] = tree
+            i = i + 1
+
+        return X
 
 
 def initializate_population():
@@ -38,16 +57,3 @@ def initializate_population():
         trees.append(root)
 
     return trees
-
-
-class Initialization(Sampling):
-
-    def _do(self, problem, n_samples, **kwargs):
-        X = np.full((n_samples, 1), None)
-
-        i = 0
-        for tree in initializate_population():
-            X[i, 0] = tree
-            i = i + 1
-
-        return X

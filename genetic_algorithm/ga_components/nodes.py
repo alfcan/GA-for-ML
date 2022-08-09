@@ -21,7 +21,7 @@ class InnerNode(Node):
         super().__init__(0)
         self.childs = [None, None]
         self.feature = feature
-        self.condition = condition  # contidion=0 : < --- condition=1 : >=
+        self.condition = condition  # < --- >=
         self.value = value
         self.value_range = value_range  # range= "min_value-max_value"
 

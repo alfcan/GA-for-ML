@@ -10,7 +10,7 @@ def generate_nodes(inner_nodes, leafs, filename):
 
     with open(filename) as file:
         for line in file:
-            node = line.split()
+            node = line.strip().split('#')
             if node[0] == '0':
                 node = InnerNode(node[1], get_condition(), get_value(node[2]), node[2])
                 inner_nodes.append(node)

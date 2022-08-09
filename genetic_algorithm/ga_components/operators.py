@@ -26,7 +26,7 @@ class TreeCrossover(Crossover):
             iterations = randrange(get_tree_height(offspring1) + 1)
             for i in range(iterations):
                 if offspring1.type == 0:
-                    if random() > 0.4:
+                    if random() <= 0.5:
                         offspring1 = offspring1.get_child_left()
                     else:
                         offspring1 = offspring1.get_child_right()
@@ -34,7 +34,7 @@ class TreeCrossover(Crossover):
             iterations = randrange(get_tree_height(offspring2) + 1)
             for i in range(0, iterations):
                 if offspring2.type == 0:
-                    if random() <= 0.6:
+                    if random() <= 0.5:
                         offspring2 = offspring2.get_child_left()
                     else:
                         offspring2 = offspring2.get_child_right()
