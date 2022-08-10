@@ -1,4 +1,3 @@
-import numpy as np
 from pymoo.algorithms.soo.nonconvex.ga import GA
 from pymoo.factory import get_selection
 from pymoo.optimize import minimize
@@ -24,3 +23,4 @@ if __name__ == '__main__':
 
     print('\n\n FINAL SOLUTION', res.X[0])
     get_tree_representation(res.X[0])
+    print(res.F[0])

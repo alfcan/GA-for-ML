@@ -1,8 +1,7 @@
 import copy
-from random import random, randrange
+from random import randrange
 
 import numpy as np
-import pandas as pd
 from pymoo.core.problem import ElementwiseProblem
 from pymoo.core.sampling import Sampling
 
@@ -22,9 +21,8 @@ class ProblemDecisionTree(ElementwiseProblem):
         model = TreeModel(x[0])
 
         model.predict()
-        # confusion_matrix = model.get_confusion_matrix
 
-        out['F'] = random()
+        out['F'] = -model.get_precision()
 
 
 class Initialization(Sampling):

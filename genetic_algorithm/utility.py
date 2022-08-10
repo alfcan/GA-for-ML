@@ -128,6 +128,21 @@ def get_root(node):
         return get_root(node.parent)
 
 
+def get_leafs(node):
+    leafs = []
+    collect_leaf_nodes(node, leafs)
+    return leafs
+
+
+def collect_leaf_nodes(node, leafs):
+    if node is not None:
+        if node.type == 1:
+            leafs.append(node)
+        else:
+            collect_leaf_nodes(node.get_child_left(), leafs)
+            collect_leaf_nodes(node.get_child_right(), leafs)
+
+
 def build_tree_file(nodes, node):
     if node.type == 0:
         child_left = nodes[f"{node.feature}_l"]
