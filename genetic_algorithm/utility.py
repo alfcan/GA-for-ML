@@ -100,7 +100,7 @@ def get_condition():
 
 
 def get_value(value_range):
-    value_range = [int(v) for v in value_range.split('-')]
+    value_range = [float(v) for v in value_range.split('/')]
     return uniform(value_range[0], value_range[1])
 
 

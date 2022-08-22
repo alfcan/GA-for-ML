@@ -14,15 +14,23 @@ NUM_PARENTS_MATING = 2
 
 
 class ProblemDecisionTree(ElementwiseProblem):
-    def __init__(self):
+    def __init__(self, metric):
         super().__init__(n_var=1, n_obj=1, n_constr=0)
+        self.metric = metric
 
     def _evaluate(self, x, out, *args, **kwargs):
         model = TreeModel(x[0])
 
         model.predict()
 
-        out['F'] = -model.get_precision()
+        if self.metric == 1:
+            evaluation = -model.get_precision()
+        elif self.metric == 2:
+            evaluation = -model.get_recall()
+        else:
+            evaluation = -model.get_accuracy()
+
+        out['F'] = evaluation
 
 
 class Initialization(Sampling):

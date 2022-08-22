@@ -10,6 +10,12 @@ SIZE_POPULATION = 10
 
 if __name__ == '__main__':
 
+    print('\nRESEARCHED FOR ML\n')
+    print('Select the metric for the evaluation of the individual:\n1.Precision\n2.Recall\n3.Accuracy\n')
+    print('By default, the metric used is accuracy')
+    metric = input('Type your choice: ')
+    print('\n\n')
+
     algorithm = GA(pop_size=SIZE_POPULATION,
                    sampling=Initialization(),
                    selection=get_selection('random'),
@@ -17,10 +23,10 @@ if __name__ == '__main__':
                    mutation=TreeMutation(),
                    eliminate_duplicates=False)
 
-    res = minimize(ProblemDecisionTree(),
+    res = minimize(ProblemDecisionTree(int(metric)),
                    algorithm,
                    verbose=False)
 
-    print('\n\n FINAL SOLUTION', res.X[0])
+    print('\n\nFINAL SOLUTION', res.X[0])
     get_tree_representation(res.X[0])
     print(res.F[0])

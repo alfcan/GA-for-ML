@@ -6,7 +6,7 @@ from pymoo.core.crossover import Crossover
 from pymoo.core.duplicate import ElementwiseDuplicateElimination
 from pymoo.core.mutation import Mutation
 
-from genetic_algorithm.utility import get_root, get_tree_height, get_tree_representation
+from genetic_algorithm.utility import get_root, get_tree_height, get_leafs
 
 
 class TreeCrossover(Crossover):
@@ -72,6 +72,7 @@ class TreeMutation(Mutation):
     def _do(self, problem, X, **kwargs):
         for i in range(len(X)):
             offspring = X[i, 0]
+            leafs = get_leafs(offspring)
 
             iterations = randrange(get_tree_height(offspring) + 1)
 
@@ -84,7 +85,7 @@ class TreeMutation(Mutation):
 
             if offspring.type == 0:
                 if random() >= 0.5:  # change value
-                    value_range = [int(value) for value in offspring.value_range.split('-')]
+                    value_range = [float(value) for value in offspring.value_range.split('/')]
                     new_value = uniform(value_range[0], value_range[1])
                     offspring.value = new_value
                     print(f'Change value: {offspring.value}')
@@ -94,9 +95,9 @@ class TreeMutation(Mutation):
                     else:
                         offspring.condition = 0
                     print(f'Change condition: {offspring.condition}')
-            else:
-                print('It is a label ...')
-                # TODO
+            else:  # it is a label and change value of leaf
+                offspring.label = leafs[randrange(len(leafs))].label
+                print(f'Change Label value: {offspring.label}')
 
         return X
 

@@ -23,7 +23,7 @@ class InnerNode(Node):
         self.feature = feature
         self.condition = condition  # < --- >=
         self.value = value
-        self.value_range = value_range  # range= "min_value-max_value"
+        self.value_range = value_range  # range= "min_value/max_value"
 
     '''
         Add two childs: child_left is left child (childs[0]) and child_right is right child (childs[1])

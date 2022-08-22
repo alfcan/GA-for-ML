@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 from sklearn.metrics import confusion_matrix
 
+
 class TreeModel:
     def __init__(self, tree):
         self.tree = tree
@@ -10,11 +11,12 @@ class TreeModel:
         iris = load_iris()
 
         # transform dataset in dataframe
-        df = pd.DataFrame(data=np.c_[iris['data'], iris['target']],
-                          columns=iris['feature_names'] + ['target'])
-        self.df = df
+        self.df = pd.DataFrame(data=np.c_[iris['data'], iris['target']],
+                               columns=iris['feature_names'] + ['target'])
+
+        # self.df = pd.read_csv('df.csv')
         # indicate number of classes for calculate TP,FP,FN,TN
-        self.num_classes = 3
+        self.num_classes = 2
 
         self.confusion_matrix = None
         self.TP = []
@@ -64,3 +66,6 @@ class TreeModel:
 
     def get_recall(self):
         return np.sum(self.TP)/(np.sum(self.TP)+np.sum(self.FN))
+
+    def get_accuracy(self):
+        return (np.sum(self.TP)+np.sum(self.TN))/(np.sum(self.TP)+np.sum(self.TN)+np.sum(self.FP)+np.sum(self.FN))
