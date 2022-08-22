@@ -90,10 +90,10 @@ class TreeMutation(Mutation):
                     offspring.value = new_value
                     print(f'Change value: {offspring.value}')
                 else:  # change condition '<' <-> '>='
-                    if offspring.condition == 0:
-                        offspring.condition = 1
+                    if offspring.condition == '<':
+                        offspring.condition = '>='
                     else:
-                        offspring.condition = 0
+                        offspring.condition = '<'
                     print(f'Change condition: {offspring.condition}')
             else:  # it is a label and change value of leaf
                 offspring.label = leafs[randrange(len(leafs))].label

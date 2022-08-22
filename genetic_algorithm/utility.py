@@ -107,9 +107,9 @@ def get_value(value_range):
 def get_tree_representation(node):  # preorder visit of tree
     if node.type == 0:
         print(node.feature)
-        print(f'-- child left {node.feature}')
+        print(f'Child left {node.feature} - condition {node.condition} - value {node.value}')
         get_tree_representation(node.get_child_left())
-        print(f'-- child right {node.feature}')
+        print(f'Child right {node.feature} - condition {node.condition} - value {node.value}')
         get_tree_representation(node.get_child_right())
     else:
         print(f"Label: {node.label}")
