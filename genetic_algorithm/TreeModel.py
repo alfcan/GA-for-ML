@@ -67,3 +67,6 @@ class TreeModel:
 
     def get_accuracy(self):
         return (np.sum(self.TP)+np.sum(self.TN))/(np.sum(self.TP)+np.sum(self.TN)+np.sum(self.FP)+np.sum(self.FN))
+
+    def get_fmeasure(self):
+        return np.sum(self.TP)/(np.sum(self.TP)+((np.sum(self.FN) + np.sum(self.FP))/2))

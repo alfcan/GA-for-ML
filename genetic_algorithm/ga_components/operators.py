@@ -83,7 +83,7 @@ class TreeMutation(Mutation):
                     else:
                         offspring = offspring.get_child_right()
 
-            if offspring.type == 0: # it is a Inner Node
+            if offspring.type == 0:  # it is a Inner Node
                 if random() >= 0.5:  # change value
                     value_range = [float(value) for value in offspring.value_range.split('/')]
                     new_value = uniform(value_range[0], value_range[1])
