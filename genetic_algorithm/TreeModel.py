@@ -7,14 +7,8 @@ class TreeModel:
     def __init__(self, tree):
         self.tree = tree
 
-        from sklearn.datasets import load_iris
-        iris = load_iris()
-
-        # transform dataset in dataframe
-        self.df = pd.DataFrame(data=np.c_[iris['data'], iris['target']],
-                               columns=iris['feature_names'] + ['target'])
-
-        # self.df = pd.read_csv('df.csv')
+        self.df = pd.read_csv('df.csv')
+        self.df.drop('Unnamed: 0', axis=1)
         # indicate number of classes for calculate TP,FP,FN,TN
         self.num_classes = 2
 
@@ -29,6 +23,10 @@ class TreeModel:
         predicted = []
         for index, row in self.df.iterrows():
             expected.append(row['target'])
+            '''
+            the decision_of_tree function takes care of following 
+            the path of the tree by checking the various conditions
+            '''
             predicted.append(self.__decision_of_tree(self.tree, row))
 
         self.confusion_matrix = confusion_matrix(expected, predicted)
@@ -39,13 +37,13 @@ class TreeModel:
             return int(tree.label)
 
         if tree.type == 0:
-            if tree.condition == '<':
-                if row[tree.feature] < tree.value:
+            if tree.condition == '<=':
+                if row[tree.feature] <= tree.value:
                     return self.__decision_of_tree(tree.get_child_left(), row)
                 else:
                     return self.__decision_of_tree(tree.get_child_right(), row)
             else:
-                if row[tree.feature] >= tree.value:
+                if row[tree.feature] > tree.value:
                     return self.__decision_of_tree(tree.get_child_left(), row)
                 else:
                     return self.__decision_of_tree(tree.get_child_right(), row)

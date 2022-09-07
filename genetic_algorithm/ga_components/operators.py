@@ -72,7 +72,7 @@ class TreeMutation(Mutation):
     def _do(self, problem, X, **kwargs):
         for i in range(len(X)):
             offspring = X[i, 0]
-            leafs = get_leafs(offspring)
+            leafs = get_leafs('nodes.txt')
 
             iterations = randrange(get_tree_height(offspring) + 1)
 
@@ -83,21 +83,24 @@ class TreeMutation(Mutation):
                     else:
                         offspring = offspring.get_child_right()
 
-            if offspring.type == 0:
+            if offspring.type == 0: # it is a Inner Node
                 if random() >= 0.5:  # change value
                     value_range = [float(value) for value in offspring.value_range.split('/')]
                     new_value = uniform(value_range[0], value_range[1])
                     offspring.value = new_value
                     print(f'Change value: {offspring.value}')
-                else:  # change condition '<' <-> '>='
-                    if offspring.condition == '<':
-                        offspring.condition = '>='
+                else:  # change condition '<=' <-> '>'
+                    if offspring.condition == '<=':
+                        offspring.condition = '>'
                     else:
-                        offspring.condition = '<'
+                        offspring.condition = '<='
                     print(f'Change condition: {offspring.condition}')
             else:  # it is a label and change value of leaf
-                offspring.label = leafs[randrange(len(leafs))].label
-                print(f'Change Label value: {offspring.label}')
+                old_label = offspring.label
+                new_leafs = copy.copy(leafs)
+                new_leafs.remove(old_label)
+                offspring.label = new_leafs[randrange(len(new_leafs))]
+                print(f'Change Label value: {offspring.label} - old label {old_label}')
 
         return X
 

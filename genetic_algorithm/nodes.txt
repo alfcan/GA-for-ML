@@ -1,7 +1,22 @@
-0#sepal length (cm)#0/10
-0#sepal width (cm)#0/10
-0#petal length (cm)#0/10
-0#petal width (cm)#0/10
+0#contributed_cves#-8.489/7.925
+0#sum_noa#-6.247/7.877
+0#sum_nom#-6.215/7.947
+0#sum_wmc#-7.255/7.818
+0#sum_cbo#-7.232/7.497
+0#sum_mi#-7.676/7.946
+0#sum_rfc#-7.397/7.890
+0#sum_dit#-6.232/7.972
+0#sum_loc.1#-7.442/7.963
+0#sum_noa.1#-6.988/7.996
+0#PROCESS_sum_added_lines#-7.588/7.713
+0#PROCESS_sum_added_methods#-7.608/7.910
+0#PROCESS_sum_added_conditionals#-7.739/7.706
+0#mean_added_conditionals#-6.235/7.915
+0#med_added_conditionals#-6.169/7.678
+0#PROCESS_sum_added_calls#-7.336/7.773
+0#mean_added_calls#-7.062/7.675
+0#med_added_calls#-6.179/7.702
+0#PROCESS_sum_added_assignments#-7.523/7.911
+0#mean_added_assignments#-6.501/7.970
 1#0
 1#1
-1#2

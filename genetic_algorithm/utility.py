@@ -15,7 +15,7 @@ def generate_nodes(inner_nodes, leafs, filename):
                 node = InnerNode(node[1], get_condition(), get_value(node[2]), node[2])
                 inner_nodes.append(node)
             else:
-                leaf = Leaf(node[1])
+                leaf = Leaf(int(node[1]))
                 leafs.append(leaf)
 
 
@@ -94,9 +94,9 @@ def build_tree(node, inner_nodes, leafs, leafs_copy):
 # This function return a random condition for node
 def get_condition():
     if randrange(2) == 0:
-        return '>='
+        return '>'
     else:
-        return '<'
+        return '<='
 
 
 def get_value(value_range):
@@ -128,11 +128,14 @@ def get_root(node):
         return get_root(node.parent)
 
 
-def get_leafs(node):
+def get_leafs(filename):
     leafs = []
-    collect_leaf_nodes(node, leafs)
+    with open(filename) as file:
+        for line in file:
+            node = line.strip().split('#')
+            if node[0] == '1':
+                leafs.append(int(node[1]))
     return leafs
-
 
 def collect_leaf_nodes(node, leafs):
     if node is not None:
