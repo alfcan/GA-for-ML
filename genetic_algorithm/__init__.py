@@ -1,15 +1,17 @@
 from pymoo.algorithms.soo.nonconvex.ga import GA
-from pymoo.factory import get_selection, get_termination
+from pymoo.factory import get_termination
+from pymoo.operators.selection.tournament import TournamentSelection
 from pymoo.optimize import minimize
 
 from genetic_algorithm.TreeModel import TreeModel
 from genetic_algorithm.ga_components import problem
-from genetic_algorithm.ga_components.operators import TreeCrossover, TreeMutation, MyDuplicateElimination
+from genetic_algorithm.ga_components.operators import TreeCrossover, TreeMutation, MyDuplicateElimination, \
+    binary_tournament
 from genetic_algorithm.ga_components.problem import ProblemDecisionTree, Initialization
 from genetic_algorithm.utility import generate_nodes, build_tree, get_tree_representation
 
-if __name__ == '__main__':
 
+if __name__ == '__main__':
     print('\nRESEARCHED FOR ML\n')
     print('Select the metric for the evaluation of the individual:\n1.Precision\n2.Recall\n3.Accuracy\n4.F-measure')
     print('By default, the metric used is F-measure')
@@ -18,7 +20,7 @@ if __name__ == '__main__':
 
     algorithm = GA(pop_size=problem.SIZE_POPULATION,
                    sampling=Initialization(),
-                   selection=get_selection('random'),
+                   selection=TournamentSelection(pressure=2, func_comp=binary_tournament),
                    crossover=TreeCrossover(2, 2),
                    mutation=TreeMutation(),
                    eliminate_duplicates=False)
