@@ -27,7 +27,7 @@ if __name__ == '__main__':
 
     res = minimize(ProblemDecisionTree(metric),
                    algorithm,
-                   get_termination('n_gen', 100),
+                   get_termination('n_gen', 50),
                    seed=1,
                    verbose=True)
 
