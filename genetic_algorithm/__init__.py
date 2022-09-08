@@ -1,7 +1,8 @@
 from pymoo.algorithms.soo.nonconvex.ga import GA
-from pymoo.factory import get_selection
+from pymoo.factory import get_selection, get_termination
 from pymoo.optimize import minimize
 
+from genetic_algorithm.TreeModel import TreeModel
 from genetic_algorithm.ga_components import problem
 from genetic_algorithm.ga_components.operators import TreeCrossover, TreeMutation, MyDuplicateElimination
 from genetic_algorithm.ga_components.problem import ProblemDecisionTree, Initialization
@@ -24,8 +25,17 @@ if __name__ == '__main__':
 
     res = minimize(ProblemDecisionTree(metric),
                    algorithm,
-                   verbose=False)
+                   get_termination('n_gen', 100),
+                   seed=1,
+                   verbose=True)
 
     print('\n\nFINAL SOLUTION', res.X[0])
     get_tree_representation(res.X[0])
-    print(res.F[0])
+    print('Evaluation: ', res.F[0])
+
+    model = TreeModel(res.X[0])
+    model.predict()
+    print('Precision: ', model.get_precision())
+    print('Recall   : ', model.get_recall())
+    print('Accuracy : ', model.get_accuracy())
+    print('F-measure: ', model.get_fmeasure())
