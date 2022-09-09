@@ -1,7 +1,7 @@
 from pymoo.algorithms.soo.nonconvex.ga import GA
-from pymoo.factory import get_termination
 from pymoo.operators.selection.tournament import TournamentSelection
 from pymoo.optimize import minimize
+from pymoo.termination import get_termination
 
 from genetic_algorithm.TreeModel import TreeModel
 from genetic_algorithm.ga_components import problem
@@ -27,16 +27,18 @@ if __name__ == '__main__':
 
     res = minimize(ProblemDecisionTree(metric),
                    algorithm,
-                   get_termination('n_gen', 50),
+                   get_termination('n_gen', 5),
                    seed=1,
                    verbose=True)
 
     print('\n\nFINAL SOLUTION', res.X[0])
     get_tree_representation(res.X[0])
-    print('Evaluation: ', res.F[0])
+    print('\nEvaluation: ', res.F[0])
 
     model = TreeModel(res.X[0])
     model.predict()
+    print('\n\nAll metrics of the model.')
+    print(res.X[0])
     print('Precision: ', model.get_precision())
     print('Recall   : ', model.get_recall())
     print('Accuracy : ', model.get_accuracy())

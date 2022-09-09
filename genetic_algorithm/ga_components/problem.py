@@ -9,7 +9,7 @@ from genetic_algorithm.TreeModel import TreeModel
 from genetic_algorithm.utility import generate_nodes, build_tree
 
 FILE_NODES = 'nodes.txt'
-SIZE_POPULATION = 100
+SIZE_POPULATION = 50
 NUM_PARENTS_MATING = 2
 
 
@@ -22,6 +22,8 @@ class ProblemDecisionTree(ElementwiseProblem):
         model = TreeModel(x[0])
 
         model.predict()
+        print(f'precision: {model.get_precision()} - recall: {model.get_recall()} - accuracy: {model.get_accuracy()}'
+              f' - fmeasure: {model.get_fmeasure()}')
 
         if self.metric == 1:
             evaluation = -model.get_precision()
