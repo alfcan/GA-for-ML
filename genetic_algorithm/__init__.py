@@ -1,5 +1,5 @@
 from pymoo.algorithms.soo.nonconvex.ga import GA
-from pymoo.factory import get_selection, get_termination
+from pymoo.factory import get_termination
 from pymoo.operators.selection.tournament import TournamentSelection
 from pymoo.optimize import minimize
 
@@ -29,7 +29,7 @@ if __name__ == '__main__':
                    get_termination('n_gen', 50),
                    # get_termination("time", "00:05:00"),
                    seed=1,
-                   verbose=False)
+                   verbose=True)
 
     print('\n\nFINAL SOLUTION', res.X[0])
     get_tree_representation(res.X[0])

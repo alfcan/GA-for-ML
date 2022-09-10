@@ -42,13 +42,13 @@ class TreeModel:
                     return self.__decision_of_tree(tree.get_child_right(), row)
 
     def get_precision(self):
-        return precision_score(self.expected, self.predicted, average='micro')
+        return precision_score(self.expected, self.predicted)
 
     def get_recall(self):
-        return recall_score(self.expected, self.predicted, average='micro')
+        return recall_score(self.expected, self.predicted)
 
     def get_accuracy(self):
         return accuracy_score(self.expected, self.predicted)
 
     def get_fmeasure(self):
-        return f1_score(self.expected, self.predicted, average='micro')
+        return f1_score(self.expected, self.predicted)
