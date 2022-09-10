@@ -118,7 +118,7 @@ Project Link: [https://github.com/alfcan/GA-for-ML](https://github.com/alfcan/GA
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
 [license-shield]: https://img.shields.io/github/license/alfcan/GA-for-ML.svg?style=for-the-badge
-[license-url]: https://github.com/alfcan/GA-for-ML/blob/master/LICENSE.txt
+[license-url]: https://github.com/alfcan/GA-for-ML/blob/main/LICENSE
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://www.linkedin.com/in/alfonso-cannavale-62150b229/
 [pymoo-url]: https://pymoo.org/
