@@ -91,9 +91,8 @@ To install the packages needed to run the algorithm, simply run the following co
     ```t
     0#feature1#minvalue/maxvalue
     1#label1
-    ```
-    
-5. Run the algorithm
+    ``` 
+4. Run the algorithm
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 

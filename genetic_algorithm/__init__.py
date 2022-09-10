@@ -1,7 +1,7 @@
 from pymoo.algorithms.soo.nonconvex.ga import GA
+from pymoo.factory import get_selection, get_termination
 from pymoo.operators.selection.tournament import TournamentSelection
 from pymoo.optimize import minimize
-from pymoo.termination import get_termination
 
 from genetic_algorithm.TreeModel import TreeModel
 from genetic_algorithm.ga_components import problem
@@ -9,7 +9,6 @@ from genetic_algorithm.ga_components.operators import TreeCrossover, TreeMutatio
     binary_tournament
 from genetic_algorithm.ga_components.problem import ProblemDecisionTree, Initialization
 from genetic_algorithm.utility import generate_nodes, build_tree, get_tree_representation
-
 
 if __name__ == '__main__':
     print('\nRESEARCHED FOR ML\n')
@@ -28,8 +27,9 @@ if __name__ == '__main__':
     res = minimize(ProblemDecisionTree(metric),
                    algorithm,
                    get_termination('n_gen', 5),
+                   # get_termination("time", "00:05:00"),
                    seed=1,
-                   verbose=True)
+                   verbose=False)
 
     print('\n\nFINAL SOLUTION', res.X[0])
     get_tree_representation(res.X[0])

@@ -22,8 +22,6 @@ class ProblemDecisionTree(ElementwiseProblem):
         model = TreeModel(x[0])
 
         model.predict()
-        print(f'precision: {model.get_precision()} - recall: {model.get_recall()} - accuracy: {model.get_accuracy()}'
-              f' - fmeasure: {model.get_fmeasure()}')
 
         if self.metric == 1:
             evaluation = -model.get_precision()
@@ -35,6 +33,8 @@ class ProblemDecisionTree(ElementwiseProblem):
             evaluation = -model.get_fmeasure()
 
         out['F'] = evaluation
+        print(f'precision: {model.get_precision()} - recall: {model.get_recall()} - accuracy: {model.get_accuracy()}'
+              f' - fmeasure: {model.get_fmeasure()} -- {x[0]}')
 
 
 class Initialization(Sampling):

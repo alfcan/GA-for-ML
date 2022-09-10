@@ -1,4 +1,5 @@
 import pandas as pd
+from sklearn.datasets import load_iris
 from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
 
 
@@ -9,10 +10,13 @@ class TreeModel:
         self.predicted = []
         self.df = pd.read_csv('df.csv')
         self.df.drop('Unnamed: 0', axis=1, inplace=True)
-
+        '''
+        iris = load_iris()
+        import numpy as np
+        self.df = pd.DataFrame(data=np.c_[iris['data'], iris['target']],
+                               columns=iris['feature_names'] + ['target'])
+        '''
     def predict(self):
-        self.expected = []
-        self.predicted = []
         for index, row in self.df.iterrows():
             self.expected.append(row['target'])
             '''
@@ -38,13 +42,13 @@ class TreeModel:
                     return self.__decision_of_tree(tree.get_child_right(), row)
 
     def get_precision(self):
-        return precision_score(self.expected, self.predicted)
+        return precision_score(self.expected, self.predicted, average='micro')
 
     def get_recall(self):
-        return recall_score(self.expected, self.predicted)
+        return recall_score(self.expected, self.predicted, average='micro')
 
     def get_accuracy(self):
         return accuracy_score(self.expected, self.predicted)
 
     def get_fmeasure(self):
-        return f1_score(self.expected, self.predicted)
+        return f1_score(self.expected, self.predicted, average='micro')
