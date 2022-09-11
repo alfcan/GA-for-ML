@@ -21,7 +21,7 @@ class ProblemDecisionTree(ElementwiseProblem):
     def _evaluate(self, x, out, *args, **kwargs):
         model = TreeModel(x[0])
 
-        model.predict()
+        model.train()
 
         if self.metric == 1:
             evaluation = -model.get_precision()

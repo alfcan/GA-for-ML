@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn.datasets import load_iris
 from sklearn.metrics import f1_score, precision_score, recall_score, accuracy_score
 
 
@@ -8,16 +7,32 @@ class TreeModel:
         self.tree = tree
         self.expected = []
         self.predicted = []
-        self.df = pd.read_csv('df.csv')
-        self.df.drop('Unnamed: 0', axis=1, inplace=True)
+        self.df_train = pd.read_csv('df_train.csv')
+        self.df_train.drop('Unnamed: 0', axis=1, inplace=True)
+        self.df_test = pd.read_csv('df_test.csv')
+        self.df_test.drop('Unnamed: 0', axis=1, inplace=True)
         '''
+        from sklearn.datasets import load_iris
         iris = load_iris()
         import numpy as np
         self.df = pd.DataFrame(data=np.c_[iris['data'], iris['target']],
                                columns=iris['feature_names'] + ['target'])
         '''
+    def train(self):
+        self.expected = []
+        self.predicted = []
+        for index, row in self.df_train.iterrows():
+            self.expected.append(row['target'])
+            '''
+            the decision_of_tree function takes care of following 
+            the path of the tree by checking the various conditions
+            '''
+            self.predicted.append(self.__decision_of_tree(self.tree, row))
+
     def predict(self):
-        for index, row in self.df.iterrows():
+        self.expected = []
+        self.predicted = []
+        for index, row in self.df_test.iterrows():
             self.expected.append(row['target'])
             '''
             the decision_of_tree function takes care of following 

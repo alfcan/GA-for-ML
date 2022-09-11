@@ -33,12 +33,11 @@ if __name__ == '__main__':
 
     print('\n\nFINAL SOLUTION', res.X[0])
     get_tree_representation(res.X[0])
-    print('\nEvaluation: ', res.F[0])
+    print('\nEvaluation of the training set: ', res.F[0])
 
     model = TreeModel(res.X[0])
     model.predict()
     print('\n\nAll metrics of the model.')
-    print(res.X[0])
     print('Precision: ', model.get_precision())
     print('Recall   : ', model.get_recall())
     print('Accuracy : ', model.get_accuracy())
