@@ -51,7 +51,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-GA-for-ML came about because I wanted to analyze the performance of a genetic algorithm in defining a predictive model compared to traditional machine learning frameworks. So a genetic algorithm with Decision Tree predictive models as individuals was implemented and defined, with the goal of maximizing the following metrics: *precision*, *recall*, *accuracy* and *F-measure* (or also called F1-score). This implementation provides only binary classifications.
+GA-for-ML came about because I wanted to analyze the performance of a genetic algorithm in defining a predictive model compared to traditional machine learning frameworks. Therefore, a genetic algorithm was implemented that defines decision trees for purely binary classifications, with the goal of maximizing the following metrics: *precision*, *recall*, *accuracy* and *F-measure* (or also called F1-score).
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -86,7 +86,9 @@ To install the packages needed to run the algorithm, simply run the following co
    ```sh
    git clone https://github.com/alfcan/GA-for-ML.git
    ```
-2. Imports the dataset, named `df.csv`, on which to perform training via GA
+2. Imports datasets on which to perform training via GA and predictions.
+   - Imports `df_train.csv` for training
+   - Imports `df_test.csv` for predicting
 3. Write the `nodes.txt` file indicating the features and labels of the dataset
     ```t
     0#feature1#minvalue/maxvalue
