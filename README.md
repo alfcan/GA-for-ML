@@ -78,7 +78,7 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 To install the packages needed to run the algorithm, simply run the following command:
-- `pip install -r scripts/requirements.txt`
+- `pip install -r genetic_algorithm/requirements.txt`
 
 ### Execution of the algorithm
 
